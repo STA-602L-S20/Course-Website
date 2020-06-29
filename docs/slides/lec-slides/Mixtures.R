@@ -32,7 +32,7 @@ fit_mixture <- function(Y,K,n_iter,burn_in,thin){
   mu <- rep(0,K)
   #mu <- seq(-3,3,length.out=K)*sd(Y) + mean(Y); mu <- mu[order(mu,decreasing=F)]
   sigma_sq <- var(Y)
-  lambda <- rep(1/K,K)
+  lambda <- rep(1/K,K) #uniform
   post_prob_z <- matrix(0,n,K)
   
   ###Set null matrices to save samples
@@ -67,7 +67,7 @@ fit_mixture <- function(Y,K,n_iter,burn_in,thin){
         mu[k] <- rnorm(1,mu_k_n,sqrt(gamma_k_n_sq))
       } 
     }
-    #mu <- mu[order(mu,decreasing=F)]
+    mu <- mu[order(mu,decreasing=F)]
     #Ad-hoc trick to help with label switching
     
     
@@ -115,7 +115,7 @@ fit_mixture <- function(Y,K,n_iter,burn_in,thin){
 #First generate data
 set.seed(1234)
 Z_true <- sample(1:3,500,replace=T,prob=c(0.55,0.30,0.15))
-mu_true <- c(-5,3,9)
+mu_true <- c(-5,3,15)
 Y <- matrix(rnorm(length(Z_true),mu_true[Z_true],2.5),ncol=1)
 plot(density(Y))
 
